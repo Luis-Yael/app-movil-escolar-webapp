@@ -108,7 +108,6 @@ export class MaestrosScreenComponent implements OnInit {
       alert("No tienes permisos para eliminar este maestro.");
     }
   }
-
 }
 
 //Esto va fuera de la llave que cierra la clase

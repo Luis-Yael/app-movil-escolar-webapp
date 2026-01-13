@@ -133,6 +133,26 @@ export class AlumnosService {
     return this.http.post<any>(`${environment.url_api}/alumnos/`, data, { headers });
   }
 
+  // Obtener alumno por ID
+  public getAlumnoByID(id: number): Observable<any> {
+    const token = this.facadeService.getSessionToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.get<any>(`${environment.url_api}/alumnos-edit/?id=${id}`, { headers });
+  }
+
+  public obtenerListaAlumnos (): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, {headers:headers});
+  }
+
+  //Servicio para actualizar un usuario
+  public editarAlumno (data: any): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/alumnos-edit/`, data, {headers:headers});
+  }
+
   //Eliminar alumno
   public eliminarAlumno(idAlumno: number): Observable<any>{
     // Verificamos si existe el token de sesión
