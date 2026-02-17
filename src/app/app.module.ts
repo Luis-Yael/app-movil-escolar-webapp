@@ -36,11 +36,11 @@ import { getSpanishPaginatorIntl } from './shared/spanish-paginator-intl';
 import { MatSidenavModule } from '@angular/material/sidenav';
 //Ngx-cookie-service
 import { CookieService } from 'ngx-cookie-service';
-// Modulo para las gráficas
-import { NgChartsModule } from 'ng2-charts';
+// Modulo para las gráficas (ng2-charts ahora exporta directivas standalone)
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 // Third Party Modules
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
 import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
@@ -76,8 +76,7 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
         MatIconModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatInputModule,
-        NgxMaskDirective,
+    MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
@@ -86,12 +85,13 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
         MatTableModule,
         MatPaginatorModule,
         MatSidenavModule,
-        MatDialogModule,
-        NgChartsModule], providers: [
+    MatDialogModule,
+    BaseChartDirective], providers: [
         CookieService,
         { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
         provideNgxMask(),
+        provideCharts(withDefaultRegisterables()),
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule { }
