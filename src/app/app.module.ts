@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,54 +50,48 @@ import { SidebarComponent } from './partials/sidebar/sidebar.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginScreenComponent,
-    RegistroUsuariosScreenComponent,
-    AuthLayoutComponent,
-    DashboardLayoutComponent,
-    RegistroAdminComponent,
-    RegistroAlumnosComponent,
-    RegistroMaestrosComponent,
-    HomeScreenComponent,
-    AlumnosScreenComponent,
-    MaestrosScreenComponent,
-    AdminScreenComponent,
-    NavbarUserComponent,
-    SidebarComponent,
-    EliminarUserModalComponent,
-    GraficasScreenComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    MatCardModule,
-    MatIconModule,
-    MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
-    NgxMaskDirective,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSidenavModule,
-    MatDialogModule,
-    NgChartsModule
-  ],
-  providers: [
-    CookieService,
-    { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
-    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    provideNgxMask()
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginScreenComponent,
+        RegistroUsuariosScreenComponent,
+        AuthLayoutComponent,
+        DashboardLayoutComponent,
+        RegistroAdminComponent,
+        RegistroAlumnosComponent,
+        RegistroMaestrosComponent,
+        HomeScreenComponent,
+        AlumnosScreenComponent,
+        MaestrosScreenComponent,
+        AdminScreenComponent,
+        NavbarUserComponent,
+        SidebarComponent,
+        EliminarUserModalComponent,
+        GraficasScreenComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatCardModule,
+        MatIconModule,
+        MatRadioModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgxMaskDirective,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSidenavModule,
+        MatDialogModule,
+        NgChartsModule], providers: [
+        CookieService,
+        { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
+        { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+        provideNgxMask(),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
