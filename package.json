@@ -11,9 +11,9 @@
   "private": true,
   "overrides": {
     "tar": ">=7.5.8",
-    "minimatch": ">=10.2.1",
+  "minimatch": "3.1.2",
     "ajv": ">=8.18.0",
-    "glob": ">=10.5.1",
+  "glob": "7.2.3",
     "cacache": ">=16.1.0",
     "make-fetch-happen": ">=14.0.4",
     "pacote": ">=21.0.0",
