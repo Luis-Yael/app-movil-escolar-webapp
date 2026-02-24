@@ -9,6 +9,17 @@
     "test": "ng test"
   },
   "private": true,
+  "overrides": {
+    "tar": ">=7.5.8",
+    "minimatch": ">=10.2.1",
+    "ajv": ">=8.18.0",
+    "glob": ">=10.5.1",
+    "cacache": ">=16.1.0",
+    "make-fetch-happen": ">=14.0.4",
+    "pacote": ">=21.0.0",
+    "npm-registry-fetch": ">=18.0.3",
+    "node-gyp": ">=11.5.1"
+  },
   "dependencies": {
   "@angular/animations": "20.3.14",
     "@angular/cdk": "^20.2.14",
