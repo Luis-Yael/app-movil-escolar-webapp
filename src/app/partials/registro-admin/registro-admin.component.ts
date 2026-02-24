@@ -5,9 +5,10 @@ import { Location } from '@angular/common';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 
 @Component({
-  selector: 'app-registro-admin',
-  templateUrl: './registro-admin.component.html',
-  styleUrls: ['./registro-admin.component.scss']
+    selector: 'app-registro-admin',
+    templateUrl: './registro-admin.component.html',
+    styleUrls: ['./registro-admin.component.scss'],
+    standalone: false
 })
 export class RegistroAdminComponent implements OnInit {
 

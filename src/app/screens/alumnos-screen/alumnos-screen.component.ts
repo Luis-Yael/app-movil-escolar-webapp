@@ -7,9 +7,10 @@ import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
 
 @Component({
-  selector: 'app-alumnos-screen',
-  templateUrl: './alumnos-screen.component.html',
-  styleUrls: ['./alumnos-screen.component.scss']
+    selector: 'app-alumnos-screen',
+    templateUrl: './alumnos-screen.component.html',
+    styleUrls: ['./alumnos-screen.component.scss'],
+    standalone: false
 })
 export class AlumnosScreenComponent implements OnInit {
 

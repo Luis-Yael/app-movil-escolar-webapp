@@ -6,9 +6,10 @@ import { MatRadioChange } from '@angular/material/radio';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 
 @Component({
-  selector: 'app-registro-usuarios-screen',
-  templateUrl: './registro-usuarios-screen.component.html',
-  styleUrls: ['./registro-usuarios-screen.component.scss']
+    selector: 'app-registro-usuarios-screen',
+    templateUrl: './registro-usuarios-screen.component.html',
+    styleUrls: ['./registro-usuarios-screen.component.scss'],
+    standalone: false
 })
 export class RegistroUsuariosScreenComponent implements OnInit {
 

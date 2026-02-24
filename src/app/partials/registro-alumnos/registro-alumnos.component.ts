@@ -4,9 +4,10 @@ import { Location } from '@angular/common';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 
 @Component({
-  selector: 'app-registro-alumnos',
-  templateUrl: './registro-alumnos.component.html',
-  styleUrls: ['./registro-alumnos.component.scss']
+    selector: 'app-registro-alumnos',
+    templateUrl: './registro-alumnos.component.html',
+    styleUrls: ['./registro-alumnos.component.scss'],
+    standalone: false
 })
 export class RegistroAlumnosComponent implements OnInit {
 

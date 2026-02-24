@@ -4,9 +4,10 @@ import { AdministradoresService } from 'src/app/services/administradores.service
 import { FacadeService } from 'src/app/services/facade.service';
 
 @Component({
-  selector: 'app-admin-screen',
-  templateUrl: './admin-screen.component.html',
-  styleUrls: ['./admin-screen.component.scss']
+    selector: 'app-admin-screen',
+    templateUrl: './admin-screen.component.html',
+    styleUrls: ['./admin-screen.component.scss'],
+    standalone: false
 })
 export class AdminScreenComponent implements OnInit {
   // Variables y métodos del componente

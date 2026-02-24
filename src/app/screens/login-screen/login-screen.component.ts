@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 
 @Component({
-  selector: 'app-login-screen',
-  templateUrl: './login-screen.component.html',
-  styleUrls: ['./login-screen.component.scss']
+    selector: 'app-login-screen',
+    templateUrl: './login-screen.component.html',
+    styleUrls: ['./login-screen.component.scss'],
+    standalone: false
 })
 export class LoginScreenComponent implements OnInit {
   /** Datos del formulario */

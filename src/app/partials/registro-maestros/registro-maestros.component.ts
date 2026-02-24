@@ -5,9 +5,10 @@ import { Location } from '@angular/common';
 import { MaestrosService } from 'src/app/services/maestros.service';
 
 @Component({
-  selector: 'app-registro-maestros',
-  templateUrl: './registro-maestros.component.html',
-  styleUrls: ['./registro-maestros.component.scss']
+    selector: 'app-registro-maestros',
+    templateUrl: './registro-maestros.component.html',
+    styleUrls: ['./registro-maestros.component.scss'],
+    standalone: false
 })
 export class RegistroMaestrosComponent implements OnInit {
 

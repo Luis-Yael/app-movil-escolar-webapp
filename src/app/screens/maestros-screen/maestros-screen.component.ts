@@ -8,9 +8,10 @@ import { MaestrosService } from 'src/app/services/maestros.service';
 import { EliminarUserModalComponent } from '../../modals/eliminar-user-modal/eliminar-user-modal.component';
 
 @Component({
-  selector: 'app-maestros-screen',
-  templateUrl: './maestros-screen.component.html',
-  styleUrls: ['./maestros-screen.component.scss']
+    selector: 'app-maestros-screen',
+    templateUrl: './maestros-screen.component.html',
+    styleUrls: ['./maestros-screen.component.scss'],
+    standalone: false
 })
 export class MaestrosScreenComponent implements OnInit {
 

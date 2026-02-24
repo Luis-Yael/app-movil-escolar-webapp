@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 
 @Component({
-  selector: 'app-home-screen',
-  templateUrl: './home-screen.component.html',
-  styleUrls: ['./home-screen.component.scss']
+    selector: 'app-home-screen',
+    templateUrl: './home-screen.component.html',
+    styleUrls: ['./home-screen.component.scss'],
+    standalone: false
 })
 export class HomeScreenComponent implements OnInit{
 

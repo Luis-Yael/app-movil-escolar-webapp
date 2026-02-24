@@ -3,9 +3,10 @@ import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 
 @Component({
-  selector: 'app-graficas-screen',
-  templateUrl: './graficas-screen.component.html',
-  styleUrls: ['./graficas-screen.component.scss']
+    selector: 'app-graficas-screen',
+    templateUrl: './graficas-screen.component.html',
+    styleUrls: ['./graficas-screen.component.scss'],
+    standalone: false
 })
 export class GraficasScreenComponent implements OnInit{
 

@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 
 @Component({
-  selector: 'app-navbar-user',
-  templateUrl: './navbar-user.component.html',
-  styleUrls: ['./navbar-user.component.scss']
+    selector: 'app-navbar-user',
+    templateUrl: './navbar-user.component.html',
+    styleUrls: ['./navbar-user.component.scss'],
+    standalone: false
 })
 export class NavbarUserComponent implements OnInit {
 
