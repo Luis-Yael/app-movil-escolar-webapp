@@ -1,3 +1,4 @@
+@use "sass:color";
 // PALETTE SUPPORT FOR ALL MODULES
 .dashboard-content,
 .table-responsive,
@@ -216,6 +217,6 @@ p, span, label, input, button {
   cursor: pointer;
   transition: background 0.2s;
   &:hover, &:focus {
-    background: darken($color-primary, 10%);
+    background: color.adjust($color-primary, $lightness: -10%);
   }
 }
