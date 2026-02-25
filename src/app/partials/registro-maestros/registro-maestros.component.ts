@@ -25,7 +25,7 @@ export class RegistroMaestrosComponent implements OnInit {
   public errors:any = {};
   public editar:boolean = false;
   public token: string = "";
-  public idUser: Number = 0;
+  public idUser: number = 0;
 
 
   //Para el select
@@ -79,7 +79,7 @@ export class RegistroMaestrosComponent implements OnInit {
     }
 
     // Lógica para registrar un nuevo maestro
-    if(this.maestro.password == this.maestro.confirmar_password){
+    if(this.maestro.password === this.maestro.confirmar_password){
       this.maestrosService.registrarMaestro(this.maestro).subscribe(
         (response) => {
           // Redirigir o mostrar mensaje de éxito
@@ -110,7 +110,7 @@ export class RegistroMaestrosComponent implements OnInit {
   //Funciones para password
   showPassword()
   {
-    if(this.inputType_1 == 'password'){
+    if(this.inputType_1 === 'password'){
       this.inputType_1 = 'text';
       this.hide_1 = true;
     }
@@ -122,7 +122,7 @@ export class RegistroMaestrosComponent implements OnInit {
 
   showPwdConfirmar()
   {
-    if(this.inputType_2 == 'password'){
+    if(this.inputType_2 === 'password'){
       this.inputType_2 = 'text';
       this.hide_2 = true;
     }
@@ -150,7 +150,7 @@ export class RegistroMaestrosComponent implements OnInit {
     }else{
       console.log(event.source.value);
       this.maestro.materias_json.forEach((materia, i) => {
-        if(materia == event.source.value){
+        if(materia === event.source.value){
           this.maestro.materias_json.splice(i,1)
         }
       });
@@ -160,8 +160,8 @@ export class RegistroMaestrosComponent implements OnInit {
 
   public revisarSeleccion(nombre: string){
     if(this.maestro.materias_json){
-      var busqueda = this.maestro.materias_json.find((element)=>element==nombre);
-      if(busqueda != undefined){
+      const busqueda = this.maestro.materias_json.find((element)=>element===nombre);
+      if(busqueda !== undefined){
         return true;
       }else{
         return false;

@@ -44,7 +44,7 @@ export class MaestrosScreenComponent implements OnInit {
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
     console.log("Token: ", this.token);
-    if(this.token == ""){
+    if(this.token === ""){
       this.router.navigate(["/"]);
     }
     //Obtener maestros

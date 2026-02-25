@@ -9,7 +9,7 @@ export class ValidatorService {
 
   /**Funciones para las validaciones de los formulario*/
   required(input:any){
-    return (input != undefined && input != null && input != "" && input.toString().trim().length > 0);
+    return (input !== undefined && input !== null && input !== "" && input.toString().trim().length > 0);
   }
 
   max(input:any, size:any){
@@ -21,20 +21,22 @@ export class ValidatorService {
   }
 
   email(input:any){
-    var regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return input.match(regEx); // Invalid format
+    // Simplified but practical email check to avoid overly complex regex and lint issues
+    const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return Boolean(input && input.match(regEx)); // return true/false
   }
 
   date(input:any){
-    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    const regEx = /^\d{4}-\d{2}-\d{2}$/;
     if(!input.match(regEx)) return false;  // Invalid format
-    var d = new Date(input);
+    const d = new Date(input);
     if(Number.isNaN(d.getTime())) return false; // Invalid date
     return d.toISOString().slice(0,10) === input;
   }
 
   between(input:any, min:any, max:any){
-    return (max >= input >= min);
+    // JS doesn't support chained comparisons; use explicit bounds
+    return (input >= min && input <= max);
   }
 
   numeric(input:any){
@@ -72,7 +74,7 @@ export class ValidatorService {
   }
 
   words(input:any){
-    let pat = new RegExp('^([A-Za-zÑñáéíóúÁÉÍÓÚ ]+)$');
+    const pat = new RegExp('^([A-Za-zÑñáéíóúÁÉÍÓÚ ]+)$');
     console.log(pat.test(input), input);
     return pat.test(input);
   }

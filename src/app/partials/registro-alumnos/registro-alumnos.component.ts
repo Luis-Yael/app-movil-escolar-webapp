@@ -24,7 +24,7 @@ export class RegistroAlumnosComponent implements OnInit {
   public token: string = "";
   public errors:any={};
   public editar:boolean = false;
-  public idUser: Number = 0;
+  public idUser: number = 0;
 
   constructor(
     private router: Router,
@@ -53,7 +53,7 @@ export class RegistroAlumnosComponent implements OnInit {
       return false;
     }
     // Lógica para registrar un nuevo alumno
-    if(this.alumno.password == this.alumno.confirmar_password){
+    if(this.alumno.password === this.alumno.confirmar_password){
       this.alumnosService.registrarAlumno(this.alumno).subscribe(
         (response) => {
           // Redirigir o mostrar mensaje de éxito
@@ -85,7 +85,7 @@ export class RegistroAlumnosComponent implements OnInit {
   //Funciones para password
   showPassword()
   {
-    if(this.inputType_1 == 'password'){
+    if(this.inputType_1 === 'password'){
       this.inputType_1 = 'text';
       this.hide_1 = true;
     }
@@ -97,7 +97,7 @@ export class RegistroAlumnosComponent implements OnInit {
 
   showPwdConfirmar()
   {
-    if(this.inputType_2 == 'password'){
+    if(this.inputType_2 === 'password'){
       this.inputType_2 = 'text';
       this.hide_2 = true;
     }

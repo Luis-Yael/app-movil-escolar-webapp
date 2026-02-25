@@ -19,7 +19,7 @@ export class RegistroAdminComponent implements OnInit {
   public errors:any = {};
   public editar:boolean = false;
   public token: string = "";
-  public idUser: Number = 0;
+  public idUser: number = 0;
 
   //Para contraseñas
   public hide_1: boolean = false;
@@ -37,7 +37,7 @@ export class RegistroAdminComponent implements OnInit {
 
   ngOnInit(): void {
     //El primer if valida si existe un parámetro en la URL
-    if(this.activatedRoute.snapshot.params['id'] != undefined){
+    if(this.activatedRoute.snapshot.params['id'] !== undefined){
       this.editar = true;
       //Asignamos a nuestra variable global el valor del ID que viene por la URL
       this.idUser = this.activatedRoute.snapshot.params['id'];
@@ -61,7 +61,7 @@ export class RegistroAdminComponent implements OnInit {
   //Funciones para password
   public showPassword()
   {
-    if(this.inputType_1 == 'password'){
+    if(this.inputType_1 === 'password'){
       this.inputType_1 = 'text';
       this.hide_1 = true;
     }
@@ -73,7 +73,7 @@ export class RegistroAdminComponent implements OnInit {
 
   public showPwdConfirmar()
   {
-    if(this.inputType_2 == 'password'){
+    if(this.inputType_2 === 'password'){
       this.inputType_2 = 'text';
       this.hide_2 = true;
     }
@@ -92,7 +92,7 @@ export class RegistroAdminComponent implements OnInit {
     // Validar si las contraseñas coinciden
 
     //Validar la contraseña
-    if(this.admin.password == this.admin.confirmar_password){
+    if(this.admin.password === this.admin.confirmar_password){
       // Ejecutamos el servicio de registro
       this.administradoresService.registrarAdmin(this.admin).subscribe(
         (response) => {

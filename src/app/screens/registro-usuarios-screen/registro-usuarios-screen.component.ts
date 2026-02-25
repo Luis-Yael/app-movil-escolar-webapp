@@ -37,13 +37,13 @@ export class RegistroUsuariosScreenComponent implements OnInit {
   ngOnInit(): void {
     this.user.tipo_usuario = '';
     //Obtener de la URL el rol para saber cual editar
-    if(this.activatedRoute.snapshot.params['rol'] != undefined){
+    if(this.activatedRoute.snapshot.params['rol'] !== undefined){
       this.rol = this.activatedRoute.snapshot.params['rol'];
       console.log("Rol detectado: ", this.rol);
     }
 
     //El if valida si existe un parámetro ID en la URL
-    if(this.activatedRoute.snapshot.params['id'] != undefined){
+    if(this.activatedRoute.snapshot.params['id'] !== undefined){
       this.editar = true;
       //Asignamos a nuestra variable global el valor del ID que viene por la URL
       this.idUser = this.activatedRoute.snapshot.params['id'];
@@ -54,17 +54,17 @@ export class RegistroUsuariosScreenComponent implements OnInit {
   }
 
   public radioChange(event: MatRadioChange) {
-    if(event.value == "administrador"){
+    if(event.value === "administrador"){
       this.isAdmin = true;
       this.isAlumno = false;
       this.isMaestro = false;
       this.tipo_user = "administrador";
-    }else if (event.value == "alumno"){
+    }else if (event.value === "alumno"){
       this.isAdmin = false;
       this.isAlumno = true;
       this.isMaestro = false;
       this.tipo_user = "alumno";
-    }else if (event.value == "maestro"){
+    }else if (event.value === "maestro"){
       this.isAdmin = false;
       this.isAlumno = false;
       this.isMaestro = true;
@@ -77,7 +77,7 @@ export class RegistroUsuariosScreenComponent implements OnInit {
     //Lógica para obtener el usuario según su ID y rol
     console.log("Obteniendo usuario de tipo: ", this.rol, " con ID: ", this.idUser);
     //Aquí se haría la llamada al servicio correspondiente según el rol
-    if(this.rol == "administrador"){
+    if(this.rol === "administrador"){
       this.administradoresService.obtenerAdminPorID(this.idUser).subscribe(
         (response) => {
           this.user = response;
@@ -93,9 +93,9 @@ export class RegistroUsuariosScreenComponent implements OnInit {
           alert("No se pudo obtener el administrador seleccionado");
         }
       );
-    }else if(this.rol == "maestro"){
+    }else if(this.rol === "maestro"){
       // TODO: Implementar lógica para obtener maestro por ID
-    }else if(this.rol == "alumno"){
+    }else if(this.rol === "alumno"){
       // TODO: Implementar lógica para obtener alumno por ID
     }
 

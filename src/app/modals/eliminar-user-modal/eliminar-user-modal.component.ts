@@ -31,7 +31,7 @@ export class EliminarUserModalComponent implements OnInit {
   }
 
   public eliminarUser(){
-    if(this.rol == "administrador"){
+    if(this.rol === "administrador"){
       // Entonces elimina un administrador
       this.administradoresService.eliminarAdmin(this.data.id).subscribe(
         (response)=>{
@@ -42,7 +42,7 @@ export class EliminarUserModalComponent implements OnInit {
         }
       );
 
-    }else if(this.rol == "maestro"){
+    }else if(this.rol === "maestro"){
       // Entonces elimina un maestro
       this.maestrosService.eliminarMaestro(this.data.id).subscribe(
         (response)=>{
@@ -53,7 +53,7 @@ export class EliminarUserModalComponent implements OnInit {
         }
       );
 
-    }if(this.rol == "alumno"){
+    }if(this.rol === "alumno"){
       // Entonces elimina un alumno
       this.alumnosService.eliminarAlumno(this.data.id).subscribe(
         (response)=>{
