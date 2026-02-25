@@ -13,7 +13,32 @@ npm init -y --silent > /dev/null
 echo "Installing eslint and plugins (this may take a while)..."
 npm install --no-audit --no-fund --silent eslint@8.57.1 @typescript-eslint/parser@6.21.0 @typescript-eslint/eslint-plugin@6.21.0 > /dev/null
 echo "Running eslint against project source..."
-"$TMP_DIR/node_modules/.bin/eslint" --ext .ts,.html "$PROJ_ROOT/src" --fix || true
+cat > "$TMP_DIR/.eslintrc.json" <<'JSON'
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"extends": ["plugin:@typescript-eslint/recommended"],
+	"parserOptions": {
+		"ecmaVersion": 2022,
+		"sourceType": "module"
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es2022": true
+	},
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"rules": {}
+		}
+	]
+}
+JSON
+
+# Run ESLint using the temp config and ignore the project's .eslintrc
+"$TMP_DIR/node_modules/.bin/eslint" --no-eslintrc --config "$TMP_DIR/.eslintrc.json" --ext .ts,.html "$PROJ_ROOT/src" --fix || true
 RC=$?
 echo "ESLint exit code: $RC"
 popd > /dev/null
