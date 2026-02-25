@@ -34,7 +34,7 @@ export class FacadeService {
   ) { }
 
   //Funcion para validar login
-  public validarLogin(username: String, password: String){
+  public validarLogin(username: string, password: string){
     let data = {
       "username": username,
       "password": password
@@ -60,7 +60,7 @@ export class FacadeService {
   }
 
   // Llamada al API para el login
-  public login(username: String, password: String){
+  public login(username: string, password: string){
     let data = {
       "username": username,
       "password": password

@@ -34,7 +34,7 @@
 
       <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
         <mat-label>Contraseña</mat-label>
-        <input matInput [(ngModel)]="admin.password" type="{{ inputType_1 }}" placeholder="Escribe contraseña">
+  <input matInput [(ngModel)]="admin.password" [type]="inputType_1" placeholder="Escribe contraseña">
         <mat-icon matSuffix class="eye-icon" (click)="showPassword()">{{hide_1 ? 'visibility_off' :
           'visibility'}}</mat-icon>
       </mat-form-field>
@@ -42,7 +42,7 @@
 
       <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
         <mat-label>Confirmar contraseña</mat-label>
-        <input matInput [(ngModel)]="admin.confirmar_password" type="{{ inputType_2 }}"
+        <input matInput [(ngModel)]="admin.confirmar_password" [type]="inputType_2"
           placeholder="Confirma la contraseña">
         <mat-icon matSuffix class="eye-icon" (click)="showPwdConfirmar()">{{hide_2 ? 'visibility_off' :
           'visibility'}}</mat-icon>

@@ -33,14 +33,14 @@
 
       <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
           <mat-label>Contraseña</mat-label>
-          <input matInput [(ngModel)]="alumno.password" type="{{ inputType_1 }}" placeholder="Escribe contraseña">
+    <input matInput [(ngModel)]="alumno.password" [type]="inputType_1" placeholder="Escribe contraseña">
           <mat-icon matSuffix class="eye-icon" (click)="showPassword()">{{hide_1 ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
       <div *ngIf="errors.password" class="invalid-feedback">{{ errors.password }}</div>
 
       <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
           <mat-label>Confirmar contraseña</mat-label>
-          <input matInput [(ngModel)]="alumno.confirmar_password" type="{{ inputType_2 }}" placeholder="Confirma la contraseña">
+          <input matInput [(ngModel)]="alumno.confirmar_password" [type]="inputType_2" placeholder="Confirma la contraseña">
           <mat-icon matSuffix class="eye-icon" (click)="showPwdConfirmar()">{{hide_2 ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
       <div *ngIf="errors.confirmar_password" class="invalid-feedback">{{ errors.confirmar_password }}</div>
@@ -48,7 +48,7 @@
       <!-- Cambio de input de fecha -->
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Fecha de nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="alumno.fecha_nacimiento" (focus)="picker.open()" placeholder="Agregar fecha" (dateChange)="changeFecha($event)" type="string">
+  <input matInput [matDatepicker]="picker" [(ngModel)]="alumno.fecha_nacimiento" (focus)="picker.open()" placeholder="Agregar fecha" (dateChange)="changeFecha($event)" type="text">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
