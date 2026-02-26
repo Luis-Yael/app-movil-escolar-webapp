@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FacadeService } from 'src/app/services/facade.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 
@@ -28,7 +29,8 @@ export class RegistroUsuariosScreenComponent implements OnInit {
 
   constructor(
     private location : Location,
-    public activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public facadeService: FacadeService,
     private administradoresService: AdministradoresService
@@ -85,7 +87,7 @@ export class RegistroUsuariosScreenComponent implements OnInit {
           this.user.tipo_usuario = this.rol;
           this.isAdmin = true;
         }, (error) => {
-          alert("No se pudo obtener el administrador seleccionado");
+          this.notificationService.error("No se pudo obtener el administrador seleccionado");
         }
       );
     }else if(this.rol === "maestro"){

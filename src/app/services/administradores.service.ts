@@ -81,16 +81,14 @@ export class AdministradoresService {
       error["rfc"] = this.errorService.required;
     }else if(!this.validatorService.min(data["rfc"], 12)){
       error["rfc"] = this.errorService.min(12);
-      alert("La longitud de caracteres deL RFC es menor, deben ser 12");
     }else if(!this.validatorService.max(data["rfc"], 13)){
       error["rfc"] = this.errorService.max(13);
-      alert("La longitud de caracteres deL RFC es mayor, deben ser 13");
     }
 
     if(!this.validatorService.required(data["edad"])){
       error["edad"] = this.errorService.required;
     }else if(!this.validatorService.numeric(data["edad"])){
-      alert("El formato es solo números");
+      error["edad"] = "El formato es solo números";
     }else if(data["edad"]<18){
       error["edad"] = "La edad debe ser mayor o igual a 18";
     }

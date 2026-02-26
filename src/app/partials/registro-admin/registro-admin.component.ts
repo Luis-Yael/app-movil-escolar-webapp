@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FacadeService } from 'src/app/services/facade.service';
 import { Location } from '@angular/common';
 import { AdministradoresService } from 'src/app/services/administradores.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-registro-admin',
@@ -18,7 +18,6 @@ export class RegistroAdminComponent implements OnInit {
   public admin:any = {};
   public errors:any = {};
   public editar:boolean = false;
-  public token: string = "";
   public idUser: number = 0;
 
   //Para contraseñas
@@ -29,9 +28,9 @@ export class RegistroAdminComponent implements OnInit {
 
   constructor(
     private location: Location,
-    public activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private administradoresService: AdministradoresService,
-    private facadeService: FacadeService,
+    private notificationService: NotificationService,
     private router: Router
   ) { }
 
@@ -47,7 +46,6 @@ export class RegistroAdminComponent implements OnInit {
       // Si no va a this.editar, entonces inicializamos el JSON para registro nuevo
       this.admin = this.administradoresService.esquemaAdmin();
       this.admin.rol = this.rol;
-      this.token = this.facadeService.getSessionToken();
     }
     //Imprimir datos en consola
   }
@@ -85,7 +83,7 @@ export class RegistroAdminComponent implements OnInit {
     this.errors = {};
     this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
     if(Object.keys(this.errors).length > 0){
-      return false;
+      return;
     }
     // Validar si las contraseñas coinciden
 
@@ -95,20 +93,16 @@ export class RegistroAdminComponent implements OnInit {
       this.administradoresService.registrarAdmin(this.admin).subscribe(
         (response) => {
           // Redirigir o mostrar mensaje de éxito
-          alert("Administrador registrado exitosamente");
-          if(this.token && this.token !== ""){
-            this.router.navigate(['/administrador']);
-          }else{
-            this.router.navigate(['/']);
-          }
+          this.notificationService.success("Administrador registrado exitosamente");
+          this.router.navigate(['/administrador']);
         },
         (error) => {
           // Manejar errores de la API
-          alert("Error al registrar administrador");
+          this.notificationService.error("Error al registrar administrador");
         }
       );
     }else{
-      alert("Las contraseñas no coinciden");
+      this.notificationService.error("Las contraseñas no coinciden");
       this.admin.password="";
       this.admin.confirmar_password="";
     }
@@ -119,18 +113,18 @@ export class RegistroAdminComponent implements OnInit {
     this.errors = {};
     this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
     if(Object.keys(this.errors).length > 0){
-      return false;
+      return;
     }
     // Ejecutamos el servicio de actualización
     this.administradoresService.actualizarAdmin(this.admin).subscribe(
       (response) => {
         // Redirigir o mostrar mensaje de éxito
-        alert("Administrador actualizado exitosamente");
+        this.notificationService.success("Administrador actualizado exitosamente");
       this.router.navigate(['/administrador']);
       },
       (error) => {
         // Manejar errores de la API
-        alert("Error al actualizar administrador");
+        this.notificationService.error("Error al actualizar administrador");
       }
     );
 

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
+import { EliminarUserModalComponent } from '../../modals/eliminar-user-modal/eliminar-user-modal.component';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-alumnos-screen',
@@ -16,35 +18,29 @@ export class AlumnosScreenComponent implements OnInit {
 
   public name_user: string = "";
   public rol: string = "";
-  public token: string = "";
   public lista_alumnos: any[] = [];
 
   //Para la tabla
   displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono', 'ocupacion', 'editar', 'eliminar'];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
   constructor(
-    public facadeService: FacadeService,
+    private facadeService: FacadeService,
     private alumnosService: AlumnosService,
+    private notificationService: NotificationService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
-    //Validar que haya inicio de sesión
-    //Obtengo el token del login
-    this.token = this.facadeService.getSessionToken();
-    if (this.token === "") {
-      this.router.navigate(["/"]);
-    }
     this.obtenerAlumnos();
   }
 
@@ -63,7 +59,7 @@ export class AlumnosScreenComponent implements OnInit {
           this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
         }
       }, (error) => {
-        alert("No se pudo obtener la lista de usuarios");
+        this.notificationService.error("No se pudo obtener la lista de usuarios");
       }
     );
   }
@@ -75,9 +71,9 @@ export class AlumnosScreenComponent implements OnInit {
     const userId = Number(this.facadeService.getUserId());
     // Usar id como identificador para editar
     if (this.rol === 'administrador' || this.rol === 'maestro' || (this.rol === 'alumno')) {
-      this.router.navigate([`/registro-usuarios/alumno/${idUser}`]);
+      this.router.navigate(['/registro-usuarios', 'alumno', idUser]);
     } else {
-      alert('No tienes permisos para editar este alumno');
+      this.notificationService.error('No tienes permisos para editar este alumno');
     }
   }
 
@@ -88,19 +84,20 @@ export class AlumnosScreenComponent implements OnInit {
     const userId = Number(this.facadeService.getUserId());
     // Usar id como identificador para eliminar
     if (this.rol === 'administrador' || this.rol === 'maestro' || (this.rol === 'alumno' && userId === idUser)) {
-      if (confirm('¿Seguro que deseas eliminar este alumno?')) {
-        this.alumnosService.eliminarAlumno(idUser).subscribe(
-          () => {
-            alert('Alumno eliminado correctamente');
-            this.obtenerAlumnos();
-          },
-          (error) => {
-            alert('No se pudo eliminar el alumno');
-          }
-        );
-      }
+      const dialogRef = this.dialog.open(EliminarUserModalComponent, {
+        data: { id: idUser, rol: 'alumno' },
+        height: '288px',
+        width: '328px',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result?.isDelete) {
+          this.obtenerAlumnos();
+        } else {
+          this.notificationService.error('Alumno no se ha podido eliminar.');
+        }
+      });
     } else {
-      alert('No tienes permisos para eliminar este alumno');
+      this.notificationService.error('No tienes permisos para eliminar este alumno');
     }
   }
 }

@@ -27,6 +27,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // Paginación
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
@@ -86,6 +87,7 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
         MatPaginatorModule,
         MatSidenavModule,
     MatDialogModule,
+    MatSnackBarModule,
     BaseChartDirective], providers: [
         CookieService,
         { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },

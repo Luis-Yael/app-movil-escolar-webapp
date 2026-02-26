@@ -21,7 +21,7 @@ export class FacadeService {
 
   constructor(
     private http: HttpClient,
-    public router: Router,
+    private router: Router,
     private cookieService: CookieService,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
@@ -121,6 +121,40 @@ export class FacadeService {
 
   getUserGroup(){
     return this.cookieService.get(group_name_cookie_name);
+  }
+
+  // ---- Role helpers (fuente única de verdad para toda la app) ----
+
+  isAdmin(): boolean {
+    return this.getUserGroup() === 'administrador';
+  }
+
+  isTeacher(): boolean {
+    return this.getUserGroup() === 'maestro';
+  }
+
+  isStudent(): boolean {
+    return this.getUserGroup() === 'alumno';
+  }
+
+  canSeeAdminItems(): boolean {
+    return this.isAdmin();
+  }
+
+  canSeeTeacherItems(): boolean {
+    return this.isAdmin() || this.isTeacher();
+  }
+
+  canSeeStudentItems(): boolean {
+    return this.isAdmin() || this.isTeacher() || this.isStudent();
+  }
+
+  canSeeHomeItem(): boolean {
+    return this.isAdmin() || this.isTeacher();
+  }
+
+  canSeeRegisterItem(): boolean {
+    return this.isAdmin() || this.isTeacher();
   }
 
 }

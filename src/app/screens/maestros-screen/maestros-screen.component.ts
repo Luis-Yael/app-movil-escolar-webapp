@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 import { EliminarUserModalComponent } from '../../modals/eliminar-user-modal/eliminar-user-modal.component';
 
 @Component({
@@ -17,35 +18,29 @@ export class MaestrosScreenComponent implements OnInit {
 
   public name_user: string = "";
   public rol: string = "";
-  public token: string = "";
   public lista_maestros: any[] = [];
 
   //Para la tabla
   displayedColumns: string[] = ['id_trabajador', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'cubiculo', 'area_investigacion', 'editar', 'eliminar'];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
   constructor(
-    public facadeService: FacadeService,
-    public maestrosService: MaestrosService,
+    private facadeService: FacadeService,
+    private maestrosService: MaestrosService,
+    private notificationService: NotificationService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
-    //Validar que haya inicio de sesión
-    //Obtengo el token del login
-    this.token = this.facadeService.getSessionToken();
-    if(this.token === ""){
-      this.router.navigate(['/']);
-    }
     //Obtener maestros
     this.obtenerMaestros();
   }
@@ -65,7 +60,7 @@ export class MaestrosScreenComponent implements OnInit {
           this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
         }
       }, (error) => {
-        alert("No se pudo obtener la lista de maestros");
+        this.notificationService.error("No se pudo obtener la lista de maestros");
       }
     );
   }
@@ -92,11 +87,11 @@ export class MaestrosScreenComponent implements OnInit {
       if(result.isDelete){
         this.obtenerMaestros();
       }else{
-        alert("Maestro no se ha podido eliminar.");
+        this.notificationService.error("Maestro no se ha podido eliminar.");
       }
     });
     }else{
-      alert("No tienes permisos para eliminar este maestro.");
+      this.notificationService.error("No tienes permisos para eliminar este maestro.");
     }
   }
 }

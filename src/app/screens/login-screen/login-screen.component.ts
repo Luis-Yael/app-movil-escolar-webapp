@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-login-screen',
@@ -17,6 +18,7 @@ export class LoginScreenComponent implements OnInit {
   public load:boolean = false;
 
   constructor(
+    private notificationService: NotificationService,
     public router: Router,
     private facadeService: FacadeService
   ) { }
@@ -29,7 +31,7 @@ export class LoginScreenComponent implements OnInit {
     this.errors = {};
     this.errors = this.facadeService.validarLogin(this.username, this.password);
     if(Object.keys(this.errors).length > 0){
-      return false;
+      return;
     }
 
     this.load = true;
@@ -55,7 +57,7 @@ export class LoginScreenComponent implements OnInit {
       (error:any) => {
         this.load = false;
         // Mostrar mensaje de error
-        alert("Error en el login: " + error.message);
+        this.notificationService.error("Error en el login: " + error.message);
         this.errors.general = "Credenciales inválidas. Por favor, inténtalo de nuevo.";
       }
     );

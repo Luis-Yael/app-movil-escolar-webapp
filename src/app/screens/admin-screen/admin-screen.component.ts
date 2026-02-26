@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 import { FacadeService } from 'src/app/services/facade.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-admin-screen',
@@ -15,7 +16,8 @@ export class AdminScreenComponent implements OnInit {
   public lista_admins: any[] = [];
 
   constructor(
-    public facadeService: FacadeService,
+    private facadeService: FacadeService,
+    private notificationService: NotificationService,
     private administradoresService: AdministradoresService,
     private router: Router,
   ) { }
@@ -34,7 +36,7 @@ export class AdminScreenComponent implements OnInit {
       (response) => {
         this.lista_admins = response;
       }, (error) => {
-        alert("No se pudo obtener la lista de administradores");
+        this.notificationService.error("No se pudo obtener la lista de administradores");
       }
     );
   }

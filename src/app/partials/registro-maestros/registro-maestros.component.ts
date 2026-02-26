@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FacadeService } from 'src/app/services/facade.service';
 import { Location } from '@angular/common';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-registro-maestros',
@@ -24,7 +24,6 @@ export class RegistroMaestrosComponent implements OnInit {
   public maestro:any = {};
   public errors:any = {};
   public editar:boolean = false;
-  public token: string = "";
   public idUser: number = 0;
 
 
@@ -51,10 +50,10 @@ export class RegistroMaestrosComponent implements OnInit {
   ];
 
   constructor(
+    private notificationService: NotificationService,
     private router: Router,
     private location : Location,
-    public activatedRoute: ActivatedRoute,
-    private facadeService: FacadeService,
+    private activatedRoute: ActivatedRoute,
     private maestrosService: MaestrosService
   ) { }
 
@@ -73,7 +72,7 @@ export class RegistroMaestrosComponent implements OnInit {
     this.errors = {};
     this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
     if(Object.keys(this.errors).length > 0){
-      return false;
+      return;
     }
 
     // Lógica para registrar un nuevo maestro
@@ -81,20 +80,16 @@ export class RegistroMaestrosComponent implements OnInit {
       this.maestrosService.registrarMaestro(this.maestro).subscribe(
         (response) => {
           // Redirigir o mostrar mensaje de éxito
-          alert("Maestro registrado exitosamente");
-          if(this.token && this.token !== ""){
-            this.router.navigate(['/maestros']);
-          }else{
-            this.router.navigate(['/']);
-          }
+          this.notificationService.success("Maestro registrado exitosamente");
+          this.router.navigate(['/maestros']);
         },
         (error) => {
           // Manejar errores de la API
-          alert("Error al registrar maestro");
+          this.notificationService.error("Error al registrar maestro");
         }
       );
     }else{
-      alert("Las contraseñas no coinciden");
+      this.notificationService.error("Las contraseñas no coinciden");
       this.maestro.password="";
       this.maestro.confirmar_password="";
     }

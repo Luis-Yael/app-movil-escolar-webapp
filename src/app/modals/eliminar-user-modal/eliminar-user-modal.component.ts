@@ -51,7 +51,7 @@ export class EliminarUserModalComponent implements OnInit {
         }
       );
 
-    }if(this.rol === "alumno"){
+    }else if(this.rol === "alumno"){
       // Entonces elimina un alumno
       this.alumnosService.eliminarAlumno(this.data.id).subscribe(
         (response)=>{

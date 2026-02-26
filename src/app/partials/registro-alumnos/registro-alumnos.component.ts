@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AlumnosService } from 'src/app/services/alumnos.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-registro-alumnos',
@@ -21,15 +22,15 @@ export class RegistroAlumnosComponent implements OnInit {
   public inputType_2: string = 'password';
 
   public alumno:any= {};
-  public token: string = "";
   public errors:any={};
   public editar:boolean = false;
   public idUser: number = 0;
 
   constructor(
+    private notificationService: NotificationService,
     private router: Router,
     private location : Location,
-    public activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private alumnosService: AlumnosService
   ) { }
 
@@ -48,27 +49,23 @@ export class RegistroAlumnosComponent implements OnInit {
     this.errors = {};
     this.errors = this.alumnosService.validarAlumno(this.alumno, this.editar);
     if(Object.keys(this.errors).length > 0){
-      return false;
+      return;
     }
     // Lógica para registrar un nuevo alumno
     if(this.alumno.password === this.alumno.confirmar_password){
       this.alumnosService.registrarAlumno(this.alumno).subscribe(
         (response) => {
           // Redirigir o mostrar mensaje de éxito
-          alert("Alumno registrado exitosamente");
-          if(this.token && this.token !== ""){
-            this.router.navigate(['/alumnos']);
-          }else{
-            this.router.navigate(['/']);
-          }
+          this.notificationService.success("Alumno registrado exitosamente");
+          this.router.navigate(['/alumnos']);
         },
         (error) => {
           // Manejar errores de la API
-          alert("Error al registrar alumno");
+          this.notificationService.error("Error al registrar alumno");
         }
       );
     }else{
-      alert("Las contraseñas no coinciden");
+      this.notificationService.error("Las contraseñas no coinciden");
       this.alumno.password="";
       this.alumno.confirmar_password="";
     }

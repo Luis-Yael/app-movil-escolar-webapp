@@ -12,10 +12,9 @@ export class NavbarUserComponent implements OnInit {
 
   public expandedMenu: string | null = null;
   public userInitial: string = '';
-  public isMobileView: boolean = window.innerWidth <= 992;
+  public isMobileView: boolean = false;
   public showUserMenu: boolean = false;
   public mobileOpen: boolean = false;
-  public userRole: string = '';
 
   // Estas variables se utilizarán por si se habilita el tema oscuro
   paletteMode: 'light' | 'dark' = 'light';
@@ -49,7 +48,6 @@ export class NavbarUserComponent implements OnInit {
   constructor(private router: Router, private facadeService: FacadeService) {
     const name = this.facadeService.getUserCompleteName();
     this.userInitial = (name && name.length > 0) ? name.trim()[0].toUpperCase() : '?';
-    this.userRole = this.facadeService.getUserGroup();
   }
 
   ngOnInit(): void {
@@ -84,7 +82,7 @@ export class NavbarUserComponent implements OnInit {
   editUser() {
     const userId = this.facadeService.getUserId();
     const userRole = this.facadeService.getUserGroup();
-    this.router.navigate([`/registro-usuarios/${userRole}/${userId}`]);
+    this.router.navigate(['/registro-usuarios', userRole, userId]);
     this.showUserMenu = false;
   }
 
@@ -112,30 +110,14 @@ export class NavbarUserComponent implements OnInit {
     );
   }
 
-  // Role helpers
-  isAdmin(): boolean {
-    return this.userRole === 'administrador';
-  }
-  isTeacher(): boolean {
-    return this.userRole === 'maestro';
-  }
-  isStudent(): boolean {
-    return this.userRole === 'alumno';
-  }
-  canSeeAdminItems(): boolean {
-    return this.isAdmin();
-  }
-  canSeeTeacherItems(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
-  canSeeStudentItems(): boolean {
-    return this.isAdmin() || this.isTeacher() || this.isStudent();
-  }
-  canSeeHomeItem(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
-  canSeeRegisterItem(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
+  // Role helpers — delegados a FacadeService (fuente única de verdad)
+  isAdmin(): boolean { return this.facadeService.isAdmin(); }
+  isTeacher(): boolean { return this.facadeService.isTeacher(); }
+  isStudent(): boolean { return this.facadeService.isStudent(); }
+  canSeeAdminItems(): boolean { return this.facadeService.canSeeAdminItems(); }
+  canSeeTeacherItems(): boolean { return this.facadeService.canSeeTeacherItems(); }
+  canSeeStudentItems(): boolean { return this.facadeService.canSeeStudentItems(); }
+  canSeeHomeItem(): boolean { return this.facadeService.canSeeHomeItem(); }
+  canSeeRegisterItem(): boolean { return this.facadeService.canSeeRegisterItem(); }
 
 }

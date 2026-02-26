@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { AdministradoresService } from 'src/app/services/administradores.service';
+import { NotificationService } from 'src/app/services/tools/notification.service';
 
 @Component({
     selector: 'app-graficas-screen',
@@ -94,6 +95,7 @@ export class GraficasScreenComponent implements OnInit{
   doughnutChartPlugins = [ DatalabelsPlugin ];
 
   constructor(
+    private notificationService: NotificationService,
     private administradoresServices: AdministradoresService
   ) { }
 
@@ -107,7 +109,7 @@ export class GraficasScreenComponent implements OnInit{
       (response)=>{
         this.total_user = response;
       }, (error)=>{
-        alert("No se pudo obtener el total de cada rol de usuarios");
+        this.notificationService.error("No se pudo obtener el total de cada rol de usuarios");
       }
     );
   }

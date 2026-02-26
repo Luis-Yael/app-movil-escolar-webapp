@@ -11,7 +11,6 @@ import { FacadeService } from 'src/app/services/facade.service';
 export class SidebarComponent implements OnInit {
   mobileOpen = false;
   isMobileView = false;
-  userRole: string = '';
 
   constructor(
     private router: Router,
@@ -20,7 +19,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobileView = window.innerWidth < 900;
-    this.userRole = this.facadeService.getUserGroup();
   }
 
   @HostListener('window:resize')
@@ -55,40 +53,13 @@ export class SidebarComponent implements OnInit {
     );
   }
 
-  // Helper methods to check user roles
-  isAdmin(): boolean {
-    return this.userRole === 'administrador';
-  }
-
-  isTeacher(): boolean {
-    return this.userRole === 'maestro';
-  }
-
-  isStudent(): boolean {
-    return this.userRole === 'alumno';
-  }
-
-  // Check if user can see admin-only items
-  canSeeAdminItems(): boolean {
-    return this.isAdmin();
-  }
-
-  // Check if user can see teacher-level items
-  canSeeTeacherItems(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
-
-  // Check if user can see all items (admin, teacher, student)
-  canSeeStudentItems(): boolean {
-    return this.isAdmin() || this.isTeacher() || this.isStudent();
-  }
-
-  // Check if user can see Inicio (admin and teacher only, not student)
-  canSeeHomeItem(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
-
-  canSeeRegisterItem(): boolean {
-    return this.isAdmin() || this.isTeacher();
-  }
+  // Helper methods — delegados a FacadeService (fuente única de verdad)
+  isAdmin(): boolean { return this.facadeService.isAdmin(); }
+  isTeacher(): boolean { return this.facadeService.isTeacher(); }
+  isStudent(): boolean { return this.facadeService.isStudent(); }
+  canSeeAdminItems(): boolean { return this.facadeService.canSeeAdminItems(); }
+  canSeeTeacherItems(): boolean { return this.facadeService.canSeeTeacherItems(); }
+  canSeeStudentItems(): boolean { return this.facadeService.canSeeStudentItems(); }
+  canSeeHomeItem(): boolean { return this.facadeService.canSeeHomeItem(); }
+  canSeeRegisterItem(): boolean { return this.facadeService.canSeeRegisterItem(); }
 }
