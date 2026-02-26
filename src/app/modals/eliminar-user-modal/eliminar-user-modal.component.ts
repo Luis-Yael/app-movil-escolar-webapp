@@ -35,7 +35,6 @@ export class EliminarUserModalComponent implements OnInit {
       // Entonces elimina un administrador
       this.administradoresService.eliminarAdmin(this.data.id).subscribe(
         (response)=>{
-          console.log(response);
           this.dialogRef.close({isDelete:true});
         }, (error)=>{
           this.dialogRef.close({isDelete:false});
@@ -46,7 +45,6 @@ export class EliminarUserModalComponent implements OnInit {
       // Entonces elimina un maestro
       this.maestrosService.eliminarMaestro(this.data.id).subscribe(
         (response)=>{
-          console.log(response);
           this.dialogRef.close({isDelete:true});
         }, (error)=>{
           this.dialogRef.close({isDelete:false});
@@ -57,7 +55,6 @@ export class EliminarUserModalComponent implements OnInit {
       // Entonces elimina un alumno
       this.alumnosService.eliminarAlumno(this.data.id).subscribe(
         (response)=>{
-          console.log(response);
           this.dialogRef.close({isDelete:true});
         }, (error)=>{
           this.dialogRef.close({isDelete:false});

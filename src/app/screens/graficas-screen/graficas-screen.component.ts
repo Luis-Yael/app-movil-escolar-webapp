@@ -106,10 +106,7 @@ export class GraficasScreenComponent implements OnInit{
     this.administradoresServices.getTotalUsuarios().subscribe(
       (response)=>{
         this.total_user = response;
-        console.log("Total usuarios: ", this.total_user);
       }, (error)=>{
-        console.log("Error al obtener total de usuarios ", error);
-
         alert("No se pudo obtener el total de cada rol de usuarios");
       }
     );

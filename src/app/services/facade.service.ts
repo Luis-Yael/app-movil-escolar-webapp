@@ -34,8 +34,6 @@ export class FacadeService {
       "username": username,
       "password": password
     };
-    console.log("Valindando login con datos: ", data);
-
     const error: any = {};
 
     if(!this.validatorService.required(data["username"])){

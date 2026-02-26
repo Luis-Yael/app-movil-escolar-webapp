@@ -43,7 +43,6 @@ export class MaestrosScreenComponent implements OnInit {
     //Validar que haya inicio de sesión
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
-    console.log("Token: ", this.token);
     if(this.token === ""){
       this.router.navigate(['/']);
     }
@@ -57,20 +56,15 @@ export class MaestrosScreenComponent implements OnInit {
     this.maestrosService.obtenerListaMaestros().subscribe(
       (response) => {
         this.lista_maestros = response;
-        console.log("Lista users: ", this.lista_maestros);
         if (this.lista_maestros.length > 0) {
-          //Agregar datos del nombre e email
           this.lista_maestros.forEach(usuario => {
             usuario.first_name = usuario.user.first_name;
             usuario.last_name = usuario.user.last_name;
             usuario.email = usuario.user.email;
           });
-          console.log("Maestros: ", this.lista_maestros);
-
           this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
         }
       }, (error) => {
-        console.error("Error al obtener la lista de maestros: ", error);
         alert("No se pudo obtener la lista de maestros");
       }
     );
@@ -96,13 +90,9 @@ export class MaestrosScreenComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.isDelete){
-        console.log("Maestro eliminado");
-        alert("Maestro eliminado correctamente.");
-        //Recargar página
-        window.location.reload();
+        this.obtenerMaestros();
       }else{
         alert("Maestro no se ha podido eliminar.");
-        console.log("No se eliminó el maestro");
       }
     });
     }else{

@@ -42,13 +42,11 @@ export class SidebarComponent implements OnInit {
   logout() {
     this.facadeService.logout().subscribe(
       (response) => {
-        console.log('Logout successful');
         this.facadeService.destroyUser();
         this.router.navigate(['/login']);
         this.closeSidebar();
       },
       (error) => {
-        console.error('Logout error:', error);
         // Fallback: clear local data and navigate anyway
         this.facadeService.destroyUser();
         this.router.navigate(['/login']);

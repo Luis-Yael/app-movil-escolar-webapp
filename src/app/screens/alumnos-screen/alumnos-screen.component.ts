@@ -42,8 +42,6 @@ export class AlumnosScreenComponent implements OnInit {
     //Validar que haya inicio de sesión
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
-    console.log("Token: ", this.token);
-
     if (this.token === "") {
       this.router.navigate(["/"]);
     }
@@ -55,7 +53,6 @@ export class AlumnosScreenComponent implements OnInit {
     this.alumnosService.obtenerListaAlumnos().subscribe(
       (response) => {
         this.lista_alumnos = response;
-        console.log("Lista users: ", this.lista_alumnos);
         if (this.lista_alumnos.length > 0) {
           //Agregar datos del nombre e email
           this.lista_alumnos.forEach(usuario => {
@@ -63,8 +60,6 @@ export class AlumnosScreenComponent implements OnInit {
             usuario.last_name = usuario.user.last_name;
             usuario.email = usuario.user.email;
           });
-          console.log("Otro user: ", this.lista_alumnos);
-
           this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
         }
       }, (error) => {

@@ -62,8 +62,6 @@ export class RegistroMaestrosComponent implements OnInit {
     this.maestro = this.maestrosService.esquemaMaestro();
     // Rol del usuario
     this.maestro.rol = this.rol;
-
-    console.log("Datos maestro: ", this.maestro);
   }
 
   public regresar(){
@@ -84,7 +82,6 @@ export class RegistroMaestrosComponent implements OnInit {
         (response) => {
           // Redirigir o mostrar mensaje de éxito
           alert("Maestro registrado exitosamente");
-          console.log("Maestro registrado: ", response);
           if(this.token && this.token !== ""){
             this.router.navigate(['/maestros']);
           }else{
@@ -94,7 +91,6 @@ export class RegistroMaestrosComponent implements OnInit {
         (error) => {
           // Manejar errores de la API
           alert("Error al registrar maestro");
-          console.error("Error al registrar maestro: ", error);
         }
       );
     }else{
@@ -134,28 +130,21 @@ export class RegistroMaestrosComponent implements OnInit {
 
   //Función para detectar el cambio de fecha
   public changeFecha(event :any){
-    console.log(event);
-    console.log(event.value.toISOString());
-
     this.maestro.fecha_nacimiento = event.value.toISOString().split("T")[0];
-    console.log("Fecha: ", this.maestro.fecha_nacimiento);
   }
 
 
   // Funciones para los checkbox
   public checkboxChange(event:any){
-    console.log("Evento: ", event);
     if(event.checked){
       this.maestro.materias_json.push(event.source.value)
     }else{
-      console.log(event.source.value);
       this.maestro.materias_json.forEach((materia, i) => {
         if(materia === event.source.value){
           this.maestro.materias_json.splice(i,1)
         }
       });
     }
-    console.log("Array materias: ", this.maestro);
   }
 
   public revisarSeleccion(nombre: string){

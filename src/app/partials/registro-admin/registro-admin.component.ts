@@ -41,7 +41,6 @@ export class RegistroAdminComponent implements OnInit {
       this.editar = true;
       //Asignamos a nuestra variable global el valor del ID que viene por la URL
       this.idUser = this.activatedRoute.snapshot.params['id'];
-      console.log("ID User: ", this.idUser);
       //Al iniciar la vista asignamos los datos del user
       this.admin = this.datos_user;
     }else{
@@ -51,7 +50,6 @@ export class RegistroAdminComponent implements OnInit {
       this.token = this.facadeService.getSessionToken();
     }
     //Imprimir datos en consola
-    console.log("Admin: ", this.admin);
   }
 
   public regresar(){
@@ -98,7 +96,6 @@ export class RegistroAdminComponent implements OnInit {
         (response) => {
           // Redirigir o mostrar mensaje de éxito
           alert("Administrador registrado exitosamente");
-          console.log("Administrador registrado: ", response);
           if(this.token && this.token !== ""){
             this.router.navigate(['/administrador']);
           }else{
@@ -108,7 +105,6 @@ export class RegistroAdminComponent implements OnInit {
         (error) => {
           // Manejar errores de la API
           alert("Error al registrar administrador");
-          console.error("Error al registrar administrador: ", error);
         }
       );
     }else{
@@ -130,13 +126,11 @@ export class RegistroAdminComponent implements OnInit {
       (response) => {
         // Redirigir o mostrar mensaje de éxito
         alert("Administrador actualizado exitosamente");
-        console.log("Administrador actualizado: ", response);
       this.router.navigate(['/administrador']);
       },
       (error) => {
         // Manejar errores de la API
         alert("Error al actualizar administrador");
-        console.error("Error al actualizar administrador: ", error);
       }
     );
 

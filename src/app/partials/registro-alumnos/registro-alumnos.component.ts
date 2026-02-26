@@ -37,8 +37,6 @@ export class RegistroAlumnosComponent implements OnInit {
     this.alumno = this.alumnosService.esquemaAlumno();
     // Rol del usuario
     this.alumno.rol = this.rol;
-
-    console.log("Datos alumno: ", this.alumno);
   }
 
   public regresar(){
@@ -58,7 +56,6 @@ export class RegistroAlumnosComponent implements OnInit {
         (response) => {
           // Redirigir o mostrar mensaje de éxito
           alert("Alumno registrado exitosamente");
-          console.log("Alumno registrado: ", response);
           if(this.token && this.token !== ""){
             this.router.navigate(['/alumnos']);
           }else{
@@ -68,7 +65,6 @@ export class RegistroAlumnosComponent implements OnInit {
         (error) => {
           // Manejar errores de la API
           alert("Error al registrar alumno");
-          console.error("Error al registrar alumno: ", error);
         }
       );
     }else{
@@ -109,11 +105,7 @@ export class RegistroAlumnosComponent implements OnInit {
 
   //Función para detectar el cambio de fecha
   public changeFecha(event :any){
-    console.log(event);
-    console.log(event.value.toISOString());
-
     this.alumno.fecha_nacimiento = event.value.toISOString().split("T")[0];
-    console.log("Fecha: ", this.alumno.fecha_nacimiento);
   }
 
   public soloLetras(event: KeyboardEvent) {

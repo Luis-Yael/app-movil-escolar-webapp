@@ -9,6 +9,7 @@ import { HomeScreenComponent } from './screens/home-screen/home-screen.component
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -24,9 +25,10 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeScreenComponent },
-      { path: 'administrador', component: AdminScreenComponent }, // Keep legacy route
+      { path: 'administrador', component: AdminScreenComponent },
       { path: 'alumnos', component: AlumnosScreenComponent },
       { path: 'maestros', component: MaestrosScreenComponent },
       { path: 'graficas', component: GraficasScreenComponent }
