@@ -45,7 +45,7 @@ export class MaestrosScreenComponent implements OnInit {
     this.token = this.facadeService.getSessionToken();
     console.log("Token: ", this.token);
     if(this.token === ""){
-      this.router.navigate(["/"]);
+      this.router.navigate(['/']);
     }
     //Obtener maestros
     this.obtenerMaestros();
@@ -77,7 +77,7 @@ export class MaestrosScreenComponent implements OnInit {
   }
 
   public goEditar(idUser: number) {
-    this.router.navigate(["registro-usuarios/maestros/" + idUser]);
+    this.router.navigate(['/registro-usuarios', 'maestro', idUser]);
   }
 
   public delete(idUser: number) {

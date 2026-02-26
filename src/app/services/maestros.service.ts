@@ -18,6 +18,14 @@ export class MaestrosService {
     private facadeService: FacadeService
   ) { }
 
+  /** Genera los HttpHeaders con el token de sesión si existe */
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.facadeService.getSessionToken();
+    return token
+      ? new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` })
+      : new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+
   public esquemaMaestro(){
     return {
       'rol':'',
@@ -38,8 +46,7 @@ export class MaestrosService {
 
   //Validación para el formulario
   public validarMaestro(data: any, editar: boolean){
-    console.log("Validando maestro... ", data);
-    const error: any = [];
+    const error: any = {};
 
     if(!this.validatorService.required(data["id_trabajador"])){
       error["id_trabajador"] = this.errorService.required;
@@ -104,43 +111,15 @@ export class MaestrosService {
     return error;
   }
 
-  //Aquí van los servicios HTTP
-  //Servicio para registrar un nuevo usuario
-  public registrarMaestro (data: any): Observable <any>{
-    // Verificamos si existe el token de sesión
-    const token = this.facadeService.getSessionToken();
-    let headers: HttpHeaders;
-    if (token) {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    } else {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
-    return this.http.post<any>(`${environment.url_api}/maestros/`, data, { headers });
+  public registrarMaestro(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/maestros/`, data, { headers: this.getAuthHeaders() });
   }
 
-  //Servicio para obtener la lista de maestros
-  public obtenerListaMaestros(): Observable<any>{
-    // Verificamos si existe el token de sesión
-    const token = this.facadeService.getSessionToken();
-    let headers: HttpHeaders;
-    if (token) {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    } else {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
-    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, { headers });
+  public obtenerListaMaestros(): Observable<any> {
+    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, { headers: this.getAuthHeaders() });
   }
 
-  //Servicio para eliminar un maestro
-  public eliminarMaestro(idMaestro: number): Observable<any>{
-    // Verificamos si existe el token de sesión
-    const token = this.facadeService.getSessionToken();
-    let headers: HttpHeaders;
-    if (token) {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    } else {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
-    return this.http.delete<any>(`${environment.url_api}/maestros/?id=${idMaestro}`, { headers });
+  public eliminarMaestro(idMaestro: number): Observable<any> {
+    return this.http.delete<any>(`${environment.url_api}/maestros/?id=${idMaestro}`, { headers: this.getAuthHeaders() });
   }
 }

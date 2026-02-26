@@ -10,7 +10,7 @@ import { FacadeService } from 'src/app/services/facade.service';
 })
 export class SidebarComponent implements OnInit {
   mobileOpen = false;
-  isMobileView = window.innerWidth < 900;
+  isMobileView = false;
   userRole: string = '';
 
   constructor(
@@ -19,8 +19,8 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isMobileView = window.innerWidth < 900;
     this.userRole = this.facadeService.getUserGroup();
-    console.log('User role in sidebar:', this.userRole);
   }
 
   @HostListener('window:resize')

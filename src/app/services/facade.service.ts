@@ -13,7 +13,6 @@ const user_email_cookie_name = 'app-movil-escolar-email';
 const user_id_cookie_name = 'app-movil-escolar-user_id';
 const user_complete_name_cookie_name = 'app-movil-escolar-user_complete_name';
 const group_name_cookie_name = 'app-movil-escolar-group_name';
-const codigo_cookie_name = 'app-movil-escolar-codigo';
 
 @Injectable({
   providedIn: 'root'

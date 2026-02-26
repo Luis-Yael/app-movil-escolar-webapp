@@ -86,9 +86,9 @@ export class RegistroMaestrosComponent implements OnInit {
           alert("Maestro registrado exitosamente");
           console.log("Maestro registrado: ", response);
           if(this.token && this.token !== ""){
-            this.router.navigate(["maestros"]);
+            this.router.navigate(['/maestros']);
           }else{
-            this.router.navigate(["/"]);
+            this.router.navigate(['/']);
           }
         },
         (error) => {

@@ -47,30 +47,18 @@ export class NavbarUserComponent implements OnInit {
   }
 
   constructor(private router: Router, private facadeService: FacadeService) {
-    // Obtenemos el rol del usuario y la inicial del nombre
     const name = this.facadeService.getUserCompleteName();
-    if (name && name.length > 0) {
-      this.userInitial = name.trim()[0].toUpperCase();
-    } else {
-      this.userInitial = '?';
-    }
+    this.userInitial = (name && name.length > 0) ? name.trim()[0].toUpperCase() : '?';
     this.userRole = this.facadeService.getUserGroup();
-    window.addEventListener('resize', () => {
-      this.isMobileView = window.innerWidth <= 992;
-      if (!this.isMobileView) {
-        this.mobileOpen = false;
-      }
-    });
-    // Siempre inicia con la paleta blanca
-    this.paletteMode = 'light';
-    const palette = this.colorPalettes['light'];
-    Object.keys(palette).forEach(key => {
-      document.documentElement.style.setProperty(key, palette[key]);
-    });
   }
 
   ngOnInit(): void {
-
+    this.isMobileView = window.innerWidth <= 992;
+    // Aplicar paleta inicial
+    const palette = this.colorPalettes['light'];
+    Object.keys(palette).forEach(key => {
+      document.documentElement.style.setProperty(key, (palette as any)[key]);
+    });
   }
 
   @HostListener('window:resize')

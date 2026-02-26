@@ -60,9 +60,9 @@ export class RegistroAlumnosComponent implements OnInit {
           alert("Alumno registrado exitosamente");
           console.log("Alumno registrado: ", response);
           if(this.token && this.token !== ""){
-            this.router.navigate(["alumnos"]);
+            this.router.navigate(['/alumnos']);
           }else{
-            this.router.navigate(["/"]);
+            this.router.navigate(['/']);
           }
         },
         (error) => {

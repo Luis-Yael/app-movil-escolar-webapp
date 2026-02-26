@@ -100,9 +100,9 @@ export class RegistroAdminComponent implements OnInit {
           alert("Administrador registrado exitosamente");
           console.log("Administrador registrado: ", response);
           if(this.token && this.token !== ""){
-            this.router.navigate(["administrador"]);
+            this.router.navigate(['/administrador']);
           }else{
-            this.router.navigate(["/"]);
+            this.router.navigate(['/']);
           }
         },
         (error) => {
@@ -131,7 +131,7 @@ export class RegistroAdminComponent implements OnInit {
         // Redirigir o mostrar mensaje de éxito
         alert("Administrador actualizado exitosamente");
         console.log("Administrador actualizado: ", response);
-        this.router.navigate(["administrador"]);
+      this.router.navigate(['/administrador']);
       },
       (error) => {
         // Manejar errores de la API

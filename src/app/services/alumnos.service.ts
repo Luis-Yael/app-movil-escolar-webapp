@@ -18,6 +18,14 @@ export class AlumnosService {
     private facadeService: FacadeService
   ) { }
 
+  /** Genera los HttpHeaders con el token de sesión si existe */
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.facadeService.getSessionToken();
+    return token
+      ? new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` })
+      : new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+
   public esquemaAlumno(){
     return {
       'rol':'',
@@ -38,8 +46,7 @@ export class AlumnosService {
 
   //Validación para el formulario
   public validarAlumno(data: any, editar: boolean){
-    console.log("Validando alumno... ", data);
-    const error: any = [];
+    const error: any = {};
 
     if(!this.validatorService.required(data["matricula"])){
       error["matricula"] = this.errorService.required;
@@ -115,50 +122,23 @@ export class AlumnosService {
     return error;
   }
 
-  //Aquí van los servicios HTTP
-  //Servicio para registrar un nuevo alumno
-  public registrarAlumno (data: any): Observable <any>{
-    // Verificamos si existe el token de sesión
-    const token = this.facadeService.getSessionToken();
-    let headers: HttpHeaders;
-    if (token) {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    } else {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
-    return this.http.post<any>(`${environment.url_api}/alumnos/`, data, { headers });
+  public registrarAlumno(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/alumnos/`, data, { headers: this.getAuthHeaders() });
   }
 
-  // Obtener alumno por ID
   public getAlumnoByID(id: number): Observable<any> {
-    const token = this.facadeService.getSessionToken();
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    return this.http.get<any>(`${environment.url_api}/alumnos-edit/?id=${id}`, { headers });
+    return this.http.get<any>(`${environment.url_api}/alumnos-edit/?id=${id}`, { headers: this.getAuthHeaders() });
   }
 
-  public obtenerListaAlumnos (): Observable <any>{
-    const token = this.facadeService.getSessionToken();
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
-    return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, {headers:headers});
+  public obtenerListaAlumnos(): Observable<any> {
+    return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, { headers: this.getAuthHeaders() });
   }
 
-  //Servicio para actualizar un usuario
-  public editarAlumno (data: any): Observable <any>{
-    const token = this.facadeService.getSessionToken();
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
-    return this.http.put<any>(`${environment.url_api}/alumnos-edit/`, data, {headers:headers});
+  public editarAlumno(data: any): Observable<any> {
+    return this.http.put<any>(`${environment.url_api}/alumnos-edit/`, data, { headers: this.getAuthHeaders() });
   }
 
-  //Eliminar alumno
-  public eliminarAlumno(idAlumno: number): Observable<any>{
-    // Verificamos si existe el token de sesión
-    const token = this.facadeService.getSessionToken();
-    let headers: HttpHeaders;
-    if (token) {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    } else {
-      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    }
-    return this.http.delete<any>(`${environment.url_api}/alumnos/${idAlumno}/`, { headers });
+  public eliminarAlumno(idAlumno: number): Observable<any> {
+    return this.http.delete<any>(`${environment.url_api}/alumnos/${idAlumno}/`, { headers: this.getAuthHeaders() });
   }
 }
