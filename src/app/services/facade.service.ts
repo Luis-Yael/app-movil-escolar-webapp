@@ -7,10 +7,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 //Estas son variables para las cookies
 const session_cookie_name = 'app-movil-escolar-token';
 const user_email_cookie_name = 'app-movil-escolar-email';
@@ -65,7 +61,8 @@ export class FacadeService {
       "username": username,
       "password": password
     };
-    return this.http.post<any>(`${environment.url_api}/login/`, data, httpOptions);
+    const jsonHeaders = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.post<any>(`${environment.url_api}/login/`, data, jsonHeaders);
   }
   //Cerrar sesión
   public logout(): Observable<any> {
